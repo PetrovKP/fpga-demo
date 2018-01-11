@@ -26,7 +26,7 @@ cl_context createContext(void) {
 
 //  Получение характеристики платформы (версия платофрмы)
   char platformName[100];
-  errNum = clGetPlatformInfo(platformsId[platform], CL_PLATFORM_VENDOR, sizeof(platformName),platformName, NULL);
+  errNum = clGetPlatformInfo(platformsId[platform], CL_PLATFORM_NAME, sizeof(platformName),platformName, NULL);
   checkError(errNum, "Info?");
   fprintf(stderr, "Platform: %s\n", platformName);
 

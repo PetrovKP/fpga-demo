@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     checkError(err, "clEnqueueReadBuffer");
   }
 
-  for (int i = 0; i < ARRAY_SIZE; i++) {
-    printf("%lf ", y[i]);
-  }
+//  for (int i = 0; i < ARRAY_SIZE; i++) {
+//    printf("%lf ", y[i]);
+//  }
 }
