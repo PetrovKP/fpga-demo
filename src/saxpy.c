@@ -4,6 +4,9 @@
 const unsigned int ARRAY_SIZE = 1024;
 
 int main(int argc, char **argv) {
+
+  printf("Program was started\n");
+
   cl_context context = 0;
   cl_command_queue commandQueue = 0;
   cl_program program = 0;
@@ -22,7 +25,7 @@ int main(int argc, char **argv) {
   double x[ARRAY_SIZE], y[ARRAY_SIZE];
   for (int i = 0; i < ARRAY_SIZE; i++) {
     x[i] = i*1.0;
-    y[i] = i*2.0;
+    y[i] = i*1.0;
   }
   const double a = 1.0;
 
@@ -54,13 +57,29 @@ int main(int argc, char **argv) {
     checkError(err, "clEnqueueNDRangeKernel");
   }
 
-  err = clEnqueueReadBuffer(commandQueue, memY, CL_TRUE, 0, ARRAY_SIZE * sizeof(float), y, 0, NULL, NULL);
+  double result[ARRAY_SIZE];
+  err = clEnqueueReadBuffer(commandQueue, memY, CL_TRUE, 0, ARRAY_SIZE * sizeof(double), result, 0, NULL, NULL);
 
   if (err != CL_SUCCESS) {
     checkError(err, "clEnqueueReadBuffer");
   }
 
-//  for (int i = 0; i < ARRAY_SIZE; i++) {
-//    printf("%lf ", y[i]);
-//  }
+  double max_fault = 1e-2;
+  int errors = 0;
+  for (size_t i = 0; i < ARRAY_SIZE; i++) {
+    double reference = y[i] + a * x[i];
+    // printf("%lf | %lf\n", result[i], reference);
+    if (result[i] - reference > max_fault) {
+      fprintf(stderr, "Values not equal: result %lf != %lf reference\n", result[i], reference);
+      ++errors;
+    }
+  }
+
+  if (errors) {
+    printf("Got %d errors\n", errors);
+  } else {
+    printf("Programm was complete without errors\n");
+  }
+
+  return 0;
 }
