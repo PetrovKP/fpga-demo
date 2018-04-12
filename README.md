@@ -16,3 +16,14 @@ Board should have installed on sd card bsp image
 * $ make (or make clean and then make)
 
 Also check is DS5 installed in INTEL_FPGA_DIR/embedded/ds-5 directory
+
+
+### Estimated Resource Usage Summary
+
+| Resource      | Usage              |       
+| ------------- |:------------------:|  
+| Logic utilization                      |   24%                     |
+| ALUTs                                  |   16%                     |  
+| Dedicated logic registers              |    9%                     |  
+| Memory blocks                          |   12%                     |  
+| DSP blocks                             |    4%                     |    
